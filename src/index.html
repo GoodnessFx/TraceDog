@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/tracedog-icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Tracedog - AI-powered alpha tracking platform for DeFi and TradFi opportunities" />
+    <meta name="keywords" content="defi, tradfi, alpha, trading, ai, cryptocurrency, security, blockchain, analytics" />
+    <meta name="author" content="Tracedog Team" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tracedog.app/" />
+    <meta property="og:title" content="Tracedog - AI Alpha Hunter" />
+    <meta property="og:description" content="AI-powered alpha tracking platform that hunts trading opportunities while you sleep" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://tracedog.app/" />
+    <meta property="twitter:title" content="Tracedog - AI Alpha Hunter" />
+    <meta property="twitter:description" content="AI-powered alpha tracking platform that hunts trading opportunities while you sleep" />
+    
+    <title>Tracedog - AI Alpha Hunter</title>
+    
+    <style>
+      /* Prevent flash of unstyled content */
+      body {
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
+        color: #1a1a1a;
+      }
+      
+      .dark body {
+        background: #0a0a0a;
+        color: #ffffff;
+      }
+      
+      /* Loading animation */
+      .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f4f6;
+        border-top: 4px solid #3b82f6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      .loading-text {
+        margin-left: 12px;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading Tracedog...</div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
