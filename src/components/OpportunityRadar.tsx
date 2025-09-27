@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
@@ -6,7 +6,6 @@ import { Button } from './ui/button';
 import { Progress } from './ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { Switch } from './ui/switch';
 import { Slider } from './ui/slider';
 import { 
   Radar,
@@ -15,23 +14,15 @@ import {
   Zap,
   DollarSign,
   Target,
-  Clock,
   AlertTriangle,
   CheckCircle,
   Pause,
   Play,
   Settings,
-  Filter,
   BarChart3,
-  PieChart,
   Activity,
-  Brain,
-  Layers,
-  Search,
-  RefreshCw,
   Eye,
   Bookmark,
-  TrendingDownIcon,
   Flame,
   Shield
 } from 'lucide-react';
@@ -468,7 +459,7 @@ export function OpportunityRadar() {
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
               <label className="text-sm font-medium mb-2 block">Action</label>
-              <Select value={filters.action} onValueChange={(value) => setFilters({...filters, action: value})}>
+              <Select value={filters.action} onValueChange={(value: string) => setFilters({...filters, action: value})}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -482,7 +473,7 @@ export function OpportunityRadar() {
             
             <div>
               <label className="text-sm font-medium mb-2 block">Risk Level</label>
-              <Select value={filters.risk} onValueChange={(value) => setFilters({...filters, risk: value})}>
+              <Select value={filters.risk} onValueChange={(value: string) => setFilters({...filters, risk: value})}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -497,7 +488,7 @@ export function OpportunityRadar() {
 
             <div>
               <label className="text-sm font-medium mb-2 block">Timeframe</label>
-              <Select value={filters.timeframe} onValueChange={(value) => setFilters({...filters, timeframe: value})}>
+              <Select value={filters.timeframe} onValueChange={(value: string) => setFilters({...filters, timeframe: value})}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -530,7 +521,7 @@ export function OpportunityRadar() {
               </label>
               <Slider
                 value={[filters.minConfidence]}
-                onValueChange={([value]) => setFilters({...filters, minConfidence: value})}
+                onValueChange={([value]: number[]) => setFilters({...filters, minConfidence: value})}
                 max={100}
                 min={0}
                 step={5}
@@ -600,7 +591,7 @@ export function OpportunityRadar() {
                         <div className="flex items-center gap-2 mb-1">
                           <h3 className="font-semibold">{opportunity.symbol}</h3>
                           {opportunity.confidence >= 85 && (
-                            <Flame className="h-4 w-4 text-orange-500" title="Hot Signal" />
+                            <Flame className="h-4 w-4 text-orange-500" />
                           )}
                         </div>
                         <p className="text-sm text-muted-foreground">
@@ -609,7 +600,7 @@ export function OpportunityRadar() {
                       </div>
                       
                       <div className="text-right">
-                        <Badge className={getActionColor(opportunity.action)} size="sm">
+                        <Badge className={getActionColor(opportunity.action)}>
                           {getActionIcon(opportunity.action)}
                           {opportunity.action.toUpperCase()}
                         </Badge>

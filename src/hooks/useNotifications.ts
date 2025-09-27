@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { Alert } from '../types';
 
 const mockAlerts: Alert[] = [
@@ -59,27 +59,17 @@ export function useNotifications() {
                          alert.priority === 'high' ? toast.warning :
                          toast.info;
 
-    // If it's a high-confidence alpha signal, show the dog image
+    // If it's a high-confidence alpha signal, show special notification
     if (showDogImage && alert.type === 'opportunity' && alert.priority === 'high') {
       toast.success(alert.title, {
-        description: (
-          <div className="flex items-center gap-3">
-            <img 
-              src="https://images.unsplash.com/photo-1693615775129-f2004d6e3e0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGdvbGRlbiUyMHJldHJpZXZlciUyMGRvZyUyMHNtaWxpbmd8ZW58MXx8fHwxNzU4NTUyODUyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-              alt="Happy Tracedog"
-              className="w-12 h-12 rounded-full object-cover"
-            />
-            <div>
-              <p className="font-medium">🎉 Alpha Found!</p>
-              <p className="text-sm opacity-80">{alert.message}</p>
-            </div>
-          </div>
-        ),
+        description: `🎉 Alpha Found! ${alert.message}`,
         duration: 6000, // Show longer for alpha signals
         action: alert.actionUrl ? {
           label: 'View Signal',
           onClick: () => {
-            window.location.hash = alert.actionUrl;
+            if (alert.actionUrl) {
+              window.location.hash = alert.actionUrl;
+            }
           }
         } : undefined
       });
@@ -89,7 +79,9 @@ export function useNotifications() {
         action: alert.actionUrl ? {
           label: 'View',
           onClick: () => {
-            window.location.hash = alert.actionUrl;
+            if (alert.actionUrl) {
+              window.location.hash = alert.actionUrl;
+            }
           }
         } : undefined
       });

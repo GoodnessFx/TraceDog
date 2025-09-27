@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'motion/react';
 import { useAlphaFeed } from '../hooks/useAlphaFeed';
 import { Card } from './ui/card';
@@ -6,13 +5,10 @@ import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Slider } from './ui/slider';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { 
   RefreshCw, 
   TrendingUp, 
-  TrendingDown,
-  ArrowUpRight,
-  ArrowDownRight,
   Clock,
   Shield,
   AlertTriangle,
@@ -22,12 +18,11 @@ import {
   ExternalLink,
   Zap,
   Target,
-  Bookmark,
-  BookmarkCheck
+  Bookmark
 } from 'lucide-react';
 
 export function Dashboard() {
-  const { signals, loading, filters, setFilters, refreshFeed, upvoteSignal, downvoteSignal } = useAlphaFeed();
+  const { signals, loading, error, filters, setFilters, refreshFeed, upvoteSignal, downvoteSignal } = useAlphaFeed();
 
   const saveSignal = (signalId: string) => {
     const signal = signals.find(s => s.id === signalId);
@@ -124,7 +119,7 @@ export function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
             <label className="text-sm font-medium mb-2 block">Category</label>
-            <Select value={filters.category} onValueChange={(value) => setFilters({...filters, category: value})}>
+            <Select value={filters.category} onValueChange={(value: string) => setFilters({...filters, category: value})}>
               <SelectTrigger>
                 <SelectValue placeholder="All Categories" />
               </SelectTrigger>
@@ -141,7 +136,7 @@ export function Dashboard() {
 
           <div>
             <label className="text-sm font-medium mb-2 block">Risk Level</label>
-            <Select value={filters.risk} onValueChange={(value) => setFilters({...filters, risk: value})}>
+            <Select value={filters.risk} onValueChange={(value: string) => setFilters({...filters, risk: value})}>
               <SelectTrigger>
                 <SelectValue placeholder="All Risk Levels" />
               </SelectTrigger>
@@ -160,7 +155,7 @@ export function Dashboard() {
             </label>
             <Slider
               value={[filters.minConfidence]}
-              onValueChange={([value]) => setFilters({...filters, minConfidence: value})}
+              onValueChange={([value]: number[]) => setFilters({...filters, minConfidence: value})}
               max={100}
               min={0}
               step={5}
@@ -169,6 +164,25 @@ export function Dashboard() {
           </div>
         </div>
       </Card>
+
+      {/* Error Display */}
+      {error && (
+        <Card className="p-4 border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-950">
+          <div className="flex items-center gap-2 text-red-800 dark:text-red-200">
+            <AlertTriangle className="h-5 w-5" />
+            <span className="font-medium">Error loading signals</span>
+          </div>
+          <p className="text-red-700 dark:text-red-300 text-sm mt-1">{error}</p>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={refreshFeed}
+            className="mt-2 border-red-300 text-red-700 hover:bg-red-100 dark:border-red-700 dark:text-red-300 dark:hover:bg-red-900"
+          >
+            Try Again
+          </Button>
+        </Card>
+      )}
 
       {/* Alpha Signals */}
       <div className="space-y-4">

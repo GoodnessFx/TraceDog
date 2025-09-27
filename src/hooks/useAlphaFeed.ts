@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { AlphaSignal } from '../types';
 
 // Mock alpha signals for demonstration
@@ -91,6 +91,7 @@ const mockAlphaSignals: AlphaSignal[] = [
 export function useAlphaFeed() {
   const [signals, setSignals] = useState<AlphaSignal[]>(mockAlphaSignals);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState({
     category: 'all' as string,
     risk: 'all' as string,
@@ -105,14 +106,31 @@ export function useAlphaFeed() {
   });
 
   const refreshFeed = async () => {
-    setLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // In a real app, this would fetch from multiple APIs
-    // CoinGecko, DefiLlama, TradingView, etc.
-    
-    setLoading(false);
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // Simulate API call with potential error
+      await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          // Simulate occasional network errors
+          if (Math.random() < 0.1) {
+            reject(new Error('Network error: Failed to fetch latest signals'));
+          } else {
+            resolve(true);
+          }
+        }, 1000);
+      });
+      
+      // In a real app, this would fetch from multiple APIs
+      // CoinGecko, DefiLlama, TradingView, etc.
+      
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+      console.error('Failed to refresh feed:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const upvoteSignal = (signalId: string) => {
@@ -134,19 +152,7 @@ export function useAlphaFeed() {
   const showAlphaFoundNotification = (signal: AlphaSignal) => {
     if (signal.confidence >= 80) {
       toast.success('🎯 High-Confidence Alpha Found!', {
-        description: (
-          <div className="flex items-center gap-3">
-            <img 
-              src="https://images.unsplash.com/photo-1693615775129-f2004d6e3e0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGdvbGRlbiUyMHJldHJpZXZlciUyMGRvZyUyMHNtaWxpbmd8ZW58MXx8fHwxNzU4NTUyODUyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-              alt="Happy Tracedog"
-              className="w-12 h-12 rounded-full object-cover border-2 border-yellow-400"
-            />
-            <div>
-              <p className="font-medium">{signal.title}</p>
-              <p className="text-sm opacity-80">Confidence: {signal.confidence}% | {signal.category.toUpperCase()}</p>
-            </div>
-          </div>
-        ),
+        description: `${signal.title} - Confidence: ${signal.confidence}% | ${signal.category.toUpperCase()}`,
         duration: 8000,
         action: {
           label: 'View Signal',
@@ -211,6 +217,7 @@ export function useAlphaFeed() {
   return {
     signals: filteredSignals,
     loading,
+    error,
     filters,
     setFilters,
     refreshFeed,

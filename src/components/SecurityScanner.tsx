@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
@@ -17,8 +17,6 @@ import {
   Lock,
   Unlock,
   Zap,
-  DollarSign,
-  Users,
   Activity
 } from 'lucide-react';
 import { SecurityAnalysis } from '../types';

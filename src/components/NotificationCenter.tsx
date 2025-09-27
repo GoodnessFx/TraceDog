@@ -1,7 +1,5 @@
-import React from 'react';
 import { motion } from 'motion/react';
 import { useNotifications } from '../hooks/useNotifications';
-import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
@@ -9,14 +7,12 @@ import { ScrollArea } from './ui/scroll-area';
 import { 
   Bell, 
   BellRing,
-  CheckCircle,
   AlertTriangle,
   Zap,
   Code,
   Shield,
   TrendingUp,
   Clock,
-  X
 } from 'lucide-react';
 import { Alert } from '../types';
 

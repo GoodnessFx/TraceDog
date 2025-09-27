@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Layout } from './components/Layout';
 import { Dashboard } from './components/Dashboard';
 import { OpportunityRadar } from './components/OpportunityRadar';
@@ -7,6 +7,7 @@ import { AlphaVault } from './components/AlphaVault';
 import { DeveloperFeed } from './components/DeveloperFeed';
 import { CommunityHub } from './components/CommunityHub';
 import { Toaster } from './components/ui/sonner';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -31,11 +32,13 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Layout activeTab={activeTab} onTabChange={setActiveTab}>
-        {renderContent()}
-      </Layout>
-      <Toaster />
-    </div>
+    <ErrorBoundary>
+      <div className="min-h-screen bg-background">
+        <Layout activeTab={activeTab} onTabChange={setActiveTab}>
+          {renderContent()}
+        </Layout>
+        <Toaster />
+      </div>
+    </ErrorBoundary>
   );
 }

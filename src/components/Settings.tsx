@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { motion } from 'motion/react';
-import { Card } from './ui/card';
+import { useState } from 'react';
 import { Button } from './ui/button';
 import { Label } from './ui/label';
 import { Switch } from './ui/switch';
@@ -13,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Separator } from './ui/separator';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog';
 import { ScrollArea } from './ui/scroll-area';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import {
   Settings as SettingsIcon,
   User,
@@ -23,16 +21,12 @@ import {
   Database,
   Shield,
   Zap,
-  Globe,
   Download,
-  Upload,
   RotateCcw,
   Save,
-  X,
   Moon,
   Sun,
   Volume2,
-  VolumeX,
   Mail,
   MessageSquare,
   Smartphone,
@@ -267,7 +261,7 @@ export function Settings({ open, onOpenChange }: SettingsProps) {
                             </div>
                             <Switch
                               checked={settings.emailNotifications}
-                              onCheckedChange={(checked) => handleSettingChange('emailNotifications', checked)}
+                              onCheckedChange={(checked: boolean) => handleSettingChange('emailNotifications', checked)}
                             />
                           </div>
                           <div className="flex items-center justify-between">
@@ -277,7 +271,7 @@ export function Settings({ open, onOpenChange }: SettingsProps) {
                             </div>
                             <Switch
                               checked={settings.pushNotifications}
-                              onCheckedChange={(checked) => handleSettingChange('pushNotifications', checked)}
+                              onCheckedChange={(checked: boolean) => handleSettingChange('pushNotifications', checked)}
                             />
                           </div>
                           <div className="flex items-center justify-between">

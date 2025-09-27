@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
@@ -9,7 +9,6 @@ import {
   Archive,
   Search,
   Bookmark,
-  Clock,
   TrendingUp,
   Star,
   Filter,
