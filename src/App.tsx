@@ -6,24 +6,28 @@ import { SecurityScanner } from './components/SecurityScanner';
 import { AlphaVault } from './components/AlphaVault';
 import { DeveloperFeed } from './components/DeveloperFeed';
 import { CommunityHub } from './components/CommunityHub';
+import AirdropScanner from './components/AirdropScanner';
 import { Toaster } from './components/ui/sonner';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <Dashboard />;
+        return <Dashboard searchQuery={searchQuery} />;
       case 'radar':
-        return <OpportunityRadar />;
+        return <OpportunityRadar searchQuery={searchQuery} />;
       case 'security':
-        return <SecurityScanner />;
+        return <SecurityScanner searchQuery={searchQuery} />;
       case 'vault':
         return <AlphaVault />;
+      case 'airdrops':
+        return <AirdropScanner />;
       case 'dev':
-        return <DeveloperFeed />;
+        return <DeveloperFeed searchQuery={searchQuery} />;
       case 'community':
         return <CommunityHub />;
       default:
@@ -34,7 +38,7 @@ export default function App() {
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-background">
-        <Layout activeTab={activeTab} onTabChange={setActiveTab}>
+        <Layout activeTab={activeTab} onTabChange={setActiveTab} searchQuery={searchQuery} onSearchChange={setSearchQuery}>
           {renderContent()}
         </Layout>
         <Toaster />
